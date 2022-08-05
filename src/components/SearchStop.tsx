@@ -37,6 +37,7 @@ function SearchStop() {
   return (
     <>
       <Search
+        data-cy="searchStop"
         placeholder="Enter stop number"
         onSearch={searchStopNumber}
         onBlur={handleBlur}

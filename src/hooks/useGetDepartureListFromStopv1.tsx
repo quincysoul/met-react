@@ -23,13 +23,13 @@ const useGetDepartureListFromStopv1 = ({ stopId }: { stopId: number | null }) =>
       if (!localStorage.isLocalStorageAvailable()) {
         localStorage = MemoryStorage;
       }
-      if (localStorage.get(KEY) !== null) {
-        nexTripObj = localStorage.get(KEY);
+      if (localStorage.get(fullUri) !== null) {
+        nexTripObj = localStorage.get(fullUri);
       }
       else {
         const res = await axios.get(fullUri, { signal: controller.signal });
         nexTripObj = res?.data ?? [];
-        localStorage.put(KEY, nexTripObj, CACHE_SECONDS);
+        localStorage.put(fullUri, nexTripObj, CACHE_SECONDS);
       }
       setData(nexTripObj);
       setError(null);

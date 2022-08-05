@@ -22,13 +22,13 @@ const useGetDirectionsv1 = ({ routeId }: { routeId: number }) => {
       if (!localStorage.isLocalStorageAvailable()) {
         localStorage = MemoryStorage;
       }
-      if (localStorage.get(KEY) !== null) {
-        directionList = localStorage.get(KEY);
+      if (localStorage.get(fullUri) !== null) {
+        directionList = localStorage.get(fullUri);
       }
       else {
         const res = await axios.get(fullUri, { signal: controller.signal });
         directionList = res?.data ?? [];
-        localStorage.put(KEY, directionList, CACHE_SECONDS);
+        localStorage.put(fullUri, directionList, CACHE_SECONDS);
       }
       setData(directionList);
       setError(null);

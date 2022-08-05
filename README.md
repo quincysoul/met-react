@@ -9,9 +9,9 @@ npm start
 
 ## Running Tests
 
-Not yet implemented!
+-Unit test - not implemented
+-E2e Screenshot test -
 
 ```
 npm run test
-npm run test:screenshot
 ```

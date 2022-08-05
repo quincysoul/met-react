@@ -12,6 +12,7 @@ function SelectDirection({ routeId, setSelectedValue, handleNextStep }: any) {
   };
   return (
     <Select
+      data-cy="selectDirection"
       className="customSelect"
       size="large"
       showSearch

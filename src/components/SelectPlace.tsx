@@ -15,6 +15,7 @@ function SelectPlace({
   };
   return (
     <Select
+      data-cy="selectPlace"
       className="customSelect"
       size="large"
       showSearch

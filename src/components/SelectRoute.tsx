@@ -13,6 +13,7 @@ function SelectRoute({ setSelectedValue, handleNextStep }: any) {
   };
   return (
     <Select
+      data-cy="selectRoute"
       className="customSelect"
       size="large"
       showSearch

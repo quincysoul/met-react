@@ -4,7 +4,6 @@ import { LocalStorage, MemoryStorage } from 'ttl-localstorage';
 import { Departure, NexTripResult, Stop } from '../types/Api';
 
 const URI = 'https://svc.metrotransit.org/nextripv2';
-const KEY = 'departureList';
 const CACHE_SECONDS = 30;
 
 // : {routeId: number, directionId: number, placeCode: number }
@@ -15,6 +14,7 @@ const useGetDepartureListv1 = ({ routeId, directionId, placeCode }: any) => {
 
   const fetchData = useCallback((async (controller: AbortController) => {
     setLoading(true);
+    const key = `${routeId}/${directionId}/${placeCode}`;
     const fullUri = `${URI}/${routeId}/${directionId}/${placeCode}`;
 
     try {
@@ -23,13 +23,13 @@ const useGetDepartureListv1 = ({ routeId, directionId, placeCode }: any) => {
       if (!localStorage.isLocalStorageAvailable()) {
         localStorage = MemoryStorage;
       }
-      if (localStorage.get(KEY) !== null) {
-        nexTripObj = localStorage.get(KEY);
+      if (localStorage.get(fullUri) !== null) {
+        nexTripObj = localStorage.get(key);
       }
       else {
         const res = await axios.get(fullUri, { signal: controller.signal });
         nexTripObj = res?.data ?? [];
-        localStorage.put(KEY, nexTripObj, CACHE_SECONDS);
+        localStorage.put(fullUri, nexTripObj, CACHE_SECONDS);
       }
       setData(nexTripObj);
       setError(null);

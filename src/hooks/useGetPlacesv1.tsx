@@ -22,13 +22,13 @@ const useGetPlaceListv1 = ({ routeId, directionId }: { routeId: number, directio
       if (!localStorage.isLocalStorageAvailable()) {
         localStorage = MemoryStorage;
       }
-      if (localStorage.get(KEY) !== null) {
-        placeList = localStorage.get(KEY);
+      if (localStorage.get(fullUri) !== null) {
+        placeList = localStorage.get(fullUri);
       }
       else {
         const res = await axios.get(fullUri, { signal: controller.signal });
         placeList = res?.data ?? [];
-        localStorage.put(KEY, placeList, CACHE_SECONDS);
+        localStorage.put(fullUri, placeList, CACHE_SECONDS);
       }
       setData(placeList);
       setError(null);

@@ -3,7 +3,7 @@ import { ColumnType } from 'antd/lib/table';
 import useGetDepartureListFromStopv1 from '../hooks/useGetDepartureListFromStopv1';
 import { Departure } from '../types/Api';
 
-function DepartureListTable({
+function StopDepartureListTable({
   stopId,
 }: any) {
   const { data, loading, error } = useGetDepartureListFromStopv1({ stopId });
@@ -56,9 +56,9 @@ function DepartureListTable({
         {' '}
         {stopId}
       </Typography.Title>
-      <Table columns={columns} dataSource={dataSource} loading={loading} className="customTable" />
+      <Table columns={columns} dataSource={dataSource} loading={loading} className="customTable" data-cy="routeTable" />
     </Row>
   );
 }
 
-export default DepartureListTable;
+export default StopDepartureListTable;

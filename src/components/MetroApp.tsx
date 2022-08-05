@@ -45,19 +45,10 @@ function MetroApp() {
   const handleNextStep = (step: number, path = '.') => {
     // if (step === 0 and formStep === 0) {}
     if (step !== formStep) {
-      console.log('navigating as', step, formStep);
       navigate(path, { state: { formStep: step } });
     }
   };
 
-  const res = [];
-  res.push(<div>Heh</div>);
-
-  /*
-  [TODO]
-  1. The path to handleNextStep could do slashes in the url like the metro - or not.
-  2. Need the hook re-usable
-  */
   return (
     <>
       <div className="splashBus" />
@@ -72,6 +63,7 @@ function MetroApp() {
             <SelectRoute
               handleNextStep={() => handleNextStep(1)}
               setSelectedValue={setRouteId}
+              className="selectRoute"
             />
             )}
           </div>
@@ -81,6 +73,7 @@ function MetroApp() {
               routeId={routeId}
               handleNextStep={() => handleNextStep(2)}
               setSelectedValue={setDirectionId}
+              className="selectDirection"
             />
             )}
           </div>
@@ -91,6 +84,7 @@ function MetroApp() {
               directionId={directionId}
               handleNextStep={() => handleNextStep(3)}
               setSelectedValue={setPlaceCode}
+              className="selectPlace"
             />
             )}
           </div>
@@ -100,12 +94,13 @@ function MetroApp() {
               routeId={routeId}
               directionId={directionId}
               placeCode={placeCode}
+              className="routeTable"
             />
             )}
           </div>
 
         </TabPane>
-        <TabPane tab="By stop #" key="2">
+        <TabPane tab="By stop #" key="2" id="tab2">
           <SearchStop />
         </TabPane>
       </Tabs>

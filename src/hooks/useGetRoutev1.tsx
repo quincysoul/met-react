@@ -22,13 +22,13 @@ const useGetRouteListv1 = () => {
       if (!localStorage.isLocalStorageAvailable()) {
         localStorage = MemoryStorage;
       }
-      if (localStorage.get(KEY) !== null) {
-        routeList = localStorage.get(KEY);
+      if (localStorage.get(fullUri) !== null) {
+        routeList = localStorage.get(fullUri);
       }
       else {
         const res = await axios.get(fullUri, { signal: controller.signal });
         routeList = res?.data ?? [];
-        localStorage.put(KEY, routeList, CACHE_SECONDS);
+        localStorage.put(fullUri, routeList, CACHE_SECONDS);
       }
       setData(routeList);
       setError(null);
