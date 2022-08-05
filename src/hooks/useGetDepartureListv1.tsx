@@ -1,36 +1,37 @@
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import { useCallback, useEffect, useState } from 'react';
 import { LocalStorage, MemoryStorage } from 'ttl-localstorage';
-import { Route } from '../types/Api';
+import { Departure, NexTripResult, Stop } from '../types/Api';
 
-const URI = 'https://svc.metrotransit.org/nextripv2/routes';
-const KEY = 'routeList';
+const URI = 'https://svc.metrotransit.org/nextripv2';
+const KEY = 'departureList';
 const CACHE_SECONDS = 30;
 
-const useGetRouteListv1 = () => {
-  const [data, setData] = useState<any>(null);
+// : {routeId: number, directionId: number, placeCode: number }
+const useGetDepartureListv1 = ({ routeId, directionId, placeCode }: any) => {
+  const [data, setData] = useState<NexTripResult>({});
   const [error, setError] = useState<any>(null);
   const [loading, setLoading] = useState<any>(null);
 
   const fetchData = useCallback((async (controller: AbortController) => {
     setLoading(true);
-    const fullUri = `${URI}`;
+    const fullUri = `${URI}/${routeId}/${directionId}/${placeCode}`;
 
     try {
-      let routeList = [];
+      let nexTripObj = {};
       let localStorage = LocalStorage;
       if (!localStorage.isLocalStorageAvailable()) {
         localStorage = MemoryStorage;
       }
       if (localStorage.get(KEY) !== null) {
-        routeList = localStorage.get(KEY);
+        nexTripObj = localStorage.get(KEY);
       }
       else {
         const res = await axios.get(fullUri, { signal: controller.signal });
-        routeList = res?.data ?? [];
-        localStorage.put(KEY, routeList, CACHE_SECONDS);
+        nexTripObj = res?.data ?? [];
+        localStorage.put(KEY, nexTripObj, CACHE_SECONDS);
       }
-      setData(routeList);
+      setData(nexTripObj);
       setError(null);
     }
     catch (err) {
@@ -43,7 +44,7 @@ const useGetRouteListv1 = () => {
     return () => {
       controller.abort('Request aborted due to unmount of component');
     };
-  }), []);
+  }), [directionId, placeCode, routeId]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -55,4 +56,4 @@ const useGetRouteListv1 = () => {
   };
 };
 
-export default useGetRouteListv1;
+export default useGetDepartureListv1;

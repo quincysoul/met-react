@@ -32,7 +32,35 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
 }
+
+.splashBus {
+  width: 100%;
+  height: 250px;
+  margin-bottom: 3em;
+  background-image: url('./assets/busimg.jpg');
+  background-position: center;
+}
+
+.selectRow {
+  margin-bottom: 0.75em;
+}
+
+.customSelect {
+  width: 100%;
+}
+
+.customTable {
+  width: 100%;
+}
+
+/* 
+.ant-select-selection--multiple {
+  white-space: nowrap;
+  height: 100px;
+  overflow: auto
+} */
